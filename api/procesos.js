@@ -1,6 +1,6 @@
 export const obtenerProcesos = async (busqueda = '') => {
   try {
-    const baseUrl = import.meta.env.VITE_API_BASE || 'https://www.datos.gov.co/resource/i6rr-nzvn.json';
+    const baseUrl = 'https://www.datos.gov.co/resource/i6rr-nzvn.json';
     const query = busqueda
       ? `?$where=upper(detalle_objeto) like upper('%25${encodeURIComponent(busqueda)}%25')&$limit=15&$order=fecha DESC`
       : '?$limit=10&$order=fecha DESC';

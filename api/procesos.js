@@ -3,10 +3,11 @@ export default async function handler(req, res) {
   const { search = "", limit = 6 } = req.query;
   const baseUrl = "https://www.datos.gov.co/resource/p6dx-8zbt.json";
   const params = new URLSearchParams({
-    $limit: limit.toString(),
-    $q: search,
-    $orderby: "fecha_inicio_proceso DESC"
-  });
+  $limit: limit.toString(),
+  $q: search,
+  $orderby: "fecha_inicio_proceso DESC"
+});
+
 
   try {
     const response = await fetch(`${baseUrl}?${params}`);

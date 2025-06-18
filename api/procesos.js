@@ -1,30 +1,17 @@
-export default async function handler(req, res) {
-  const { search = "", limit = 6 } = req.query;
-
-  const baseUrl = "https://www.datos.gov.co/resource/nma6-7zmm.json";
-  const params = new URLSearchParams({
-    $limit: limit.toString(),
-    $q: search,
-    $order: "fecha_publicacion DESC"
-  });
-
+export const obtenerProcesos = async (busqueda = '') => {
   try {
-    const response = await fetch(`${baseUrl}?${params}`);
-    if (!response.ok) throw new Error(`API respondió con ${response.status}`);
+    const baseUrl = import.meta.env.VITE_API_BASE || 'https://www.datos.gov.co/resource/i6rr-nzvn.json';
+    const query = busqueda
+      ? `?$where=upper(detalle_objeto) like upper('%25${encodeURIComponent(busqueda)}%25')&$limit=15&$order=fecha DESC`
+      : '?$limit=10&$order=fecha DESC';
 
-    const data = await response.json();
-    if (!Array.isArray(data)) throw new Error("La API no retornó un array");
-
-    const resultados = data.map(item => ({
-      entidad: item.entidad_contratante || "Entidad no disponible",
-      valor: item.objeto || "Sin descripción",
-      fecha: item.fecha_publicacion || "Sin fecha",
-      estado: item.estado || "Sin estado"
-    }));
-
-    res.status(200).json(resultados);
+    const response = await fetch(baseUrl + query);
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.error("❌ Error en handler /api/procesos:", error.message);
-    res.status(500).json({ error: true, message: error.message });
+    console.error('Error al buscar: Datos mal formateados', error);
+    return [];
   }
-}
+};

@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   const params = new URLSearchParams({
     $limit: limit.toString(),
     $q: search,
-    $order: "fecha_inicio_proceso DESC"
+    $orderby: "fecha_inicio_proceso DESC"
   });
 
   try {

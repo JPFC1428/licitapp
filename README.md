@@ -1,3 +1,0 @@
-# LICITAPP – Contratación Pública Inteligente para Colombia 🇨🇴
-
-LICITAPP es una plataforma SaaS GovTech moderna y profesional que permite a cualquier empresa en Colombia buscar, explorar y visualizar procesos de contratación pública mediante la API abierta de datos.gov.co (Socrata)...
